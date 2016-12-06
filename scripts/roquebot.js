@@ -26,8 +26,22 @@ module.exports = function(robot){
     }
 })
 
+//compliment hubot
+robot.hear(/compliment me/i, function(msg){
+  var compliments = [
+    "You're looking great today!",
+    "Hey there good-lookin'!",
+    "You so fine you blow my mind!",
+    "No.",
+    "I wish I could."
+  ];
+  var complNum = Math.floor(Math.random()*compliments.length);
+  msg.send(compliments[complNum]);
+})
 
 
+
+//wiki hubot
   robot.respond(/wiki search (.+)/i, {
     id: "wikipedia.search"
   }, function(res) {
