@@ -1,3 +1,15 @@
+/*
+To be able to use the wiki function:
+1. Install the hubot-wikipedia module as a Hubot dependency by running:
+    npm install --save hubot-wikipedia
+2. Enable the module by adding the hubot-wikipedia entry to your external-scripts.json file:
+  [
+      "hubot-wikipedia"
+  ]
+src: https://github.com/ClaudeBot/hubot-wikipedia
+
+*/
+
 var WIKI_API_URL, WIKI_EN_URL, createURL, wikiRequest;
 WIKI_API_URL = "https://en.wikipedia.org/w/api.php";
 WIKI_EN_URL = "https://en.wikipedia.org/wiki";
@@ -18,6 +30,7 @@ module.exports = function(robot){
               "cmd: play game          result: starts a number guessing game"
             )
   })
+
 //hubot guess the number game intro
   robot.hear(/play game/i, function(msg){
     numTurns = 0;
@@ -25,7 +38,7 @@ module.exports = function(robot){
     ranNum = Math.ceil(Math.random()*10);
     msg.send("Welcome to my number guessing game! " + '\n' + '\n' +
             "See how long it takes you to guess my number between 1 and 10." + '\n' + '\n' +
-            "Respond by saying 'I guess number (number)' and I'll tell you if you're correct." + '\n' + '\n' +
+            "Respond with your guess and I'll tell you if you're correct." + '\n' + '\n' +
             "If you ever want to restart, just say 'Play Game'. Let's play!" + '\n' + '\n' +
             "Start with:  'I guess number ___' ");
 
@@ -45,6 +58,7 @@ module.exports = function(robot){
     else if(a === ranNum){
       numTurns += 1;
       msg.send("You guessed it! It took you " + numTurns + " turns.");
+      msg.send('http://www.dreamlandcasino.com/images/gold.png');
       return playingGame = 0;
     }
     else{
@@ -56,7 +70,7 @@ module.exports = function(robot){
 //Is class over hubot
   robot.hear(/is class over\s?\?/i, function(msg){
       var time = new Date();
-      var hoursLeft = 22-time.getHours();
+      var hoursLeft = 21-time.getHours();
       var minutesLeft = 60-time.getMinutes();
 
       if(time.getDay() === 2 || time.getDay() === 4){           //if the day is tuesday or thursday
@@ -85,13 +99,9 @@ robot.respond(/compliment me/i, function(msg){
     "I wish I could."
   ];
   msg.send(msg.random(compliments));
-
-
 })
 
-
-
-//wiki hubot
+//wiki hubot (I didn't write this so I'm not positive how it all works)
   robot.respond(/wiki search (.+)/i, {
     id: "wikipedia.search"
   }, function(res) {
@@ -168,6 +178,5 @@ wikiRequest = function(res, params, handler) {
     return handler(JSON.parse(body));
   });
 
-//must include a .respond
 
 }
